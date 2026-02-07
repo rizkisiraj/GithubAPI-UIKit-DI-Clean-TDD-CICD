@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7E6798952F3630A90082C5A9 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 7E6798942F3630A00082C5A9 /* README.md */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		7E6798772F36303A0082C5A9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		7E67985D2F3630390082C5A9 /* GithubAPIWrapper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubAPIWrapper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E6798762F36303A0082C5A9 /* GithubAPIWrapperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GithubAPIWrapperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E6798802F36303A0082C5A9 /* GithubAPIWrapperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GithubAPIWrapperUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E6798942F3630A00082C5A9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -88,6 +93,7 @@
 		7E6798542F3630390082C5A9 = {
 			isa = PBXGroup;
 			children = (
+				7E6798942F3630A00082C5A9 /* README.md */,
 				7E67985F2F3630390082C5A9 /* GithubAPIWrapper */,
 				7E6798792F36303A0082C5A9 /* GithubAPIWrapperTests */,
 				7E6798832F36303A0082C5A9 /* GithubAPIWrapperUITests */,
@@ -249,6 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E6798952F3630A90082C5A9 /* README.md in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
