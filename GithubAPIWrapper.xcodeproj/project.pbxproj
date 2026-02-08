@@ -38,7 +38,7 @@
 		7E6798882F36303A0082C5A9 /* Exceptions for "GithubAPIWrapper" folder in "GithubAPIWrapper" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				App/Info.plist,
 			);
 			target = 7E67985C2F3630390082C5A9 /* GithubAPIWrapper */;
 		};

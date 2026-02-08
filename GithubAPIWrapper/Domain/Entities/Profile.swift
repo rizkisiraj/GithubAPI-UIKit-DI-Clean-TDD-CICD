@@ -6,10 +6,11 @@
 //
 
 struct Profile {
-    let login: String
+    let username: String
+    let avatarUrl: String
     let bio: String
     let email: String
     let followers: Int
-    let following: Int
+    let followings: Int
     var isFavorite: Bool = false
 }
