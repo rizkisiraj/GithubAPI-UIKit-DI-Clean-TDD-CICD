@@ -11,6 +11,7 @@ import Combine
 final class APIService {
     private let session: URLSession
     private let decoder: JSONDecoder
+    private let path = "https://api.github.com"
     
     init(session: URLSession = .shared, decoder: JSONDecoder = JSONDecoder()) {
         self.session = session
@@ -19,7 +20,7 @@ final class APIService {
     
     func fetchData<T: Decodable>(url: String) -> AnyPublisher<T, Error> {
         
-        let urlObject = URL(string: url)
+        let urlObject = URL(string: path + url)
         
         let request = URLRequest(url: urlObject!)
         

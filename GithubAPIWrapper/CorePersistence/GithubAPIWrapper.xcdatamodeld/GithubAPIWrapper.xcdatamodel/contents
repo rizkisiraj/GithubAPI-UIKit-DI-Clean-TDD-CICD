@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="24299" systemVersion="25C56" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="FavoriteProfile" representedClassName="FavoriteProfile" syncable="YES" codeGenerationType="class">
-        <attribute name="avatarURL" optional="YES" attributeType="String"/>
-        <attribute name="bio" optional="YES" attributeType="String"/>
-        <attribute name="email" optional="YES" attributeType="String"/>
-        <attribute name="followers" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="followings" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="isFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="username" optional="YES" attributeType="String"/>
-        <relationship name="repos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FavoriteRepo"/>
+        <attribute name="avatarURL" attributeType="String"/>
+        <attribute name="bio" attributeType="String"/>
+        <attribute name="email" attributeType="String"/>
+        <attribute name="followers" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="followings" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isFavorite" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="username" attributeType="String" spotlightIndexingEnabled="YES"/>
+        <relationship name="repos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="FavoriteRepo" inverseName="profile" inverseEntity="FavoriteRepo"/>
     </entity>
     <entity name="FavoriteRepo" representedClassName="FavoriteRepo" syncable="YES" codeGenerationType="class">
         <attribute name="descriptions" optional="YES" attributeType="String"/>
         <attribute name="language" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FavoriteProfile" inverseName="repos" inverseEntity="FavoriteProfile"/>
     </entity>
 </model>

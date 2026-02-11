@@ -5,7 +5,7 @@
 //  Created by Rizki Siraj on 07/02/26.
 //
 
-struct Profile {
+struct Profile: Decodable {
     let username: String
     let avatarUrl: String
     let bio: String

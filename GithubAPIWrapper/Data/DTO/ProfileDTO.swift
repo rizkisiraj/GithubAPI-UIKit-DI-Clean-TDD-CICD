@@ -7,8 +7,8 @@
 
 struct ProfileDTO: Codable {
     let login: String
-    let avatar_url: String
-    let bio: String
+    let avatar_url: String?
+    let bio: String?
     let email: String
     let followers: Int
     let following: Int

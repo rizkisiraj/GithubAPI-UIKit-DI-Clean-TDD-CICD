@@ -10,5 +10,5 @@ protocol UserRepository {
     func getUsers(query: String, page: Int) -> AnyPublisher<[Profile], Error>
     func getUser(username: String) -> AnyPublisher<Profile, Error>
     func getFavoriteUsers() -> AnyPublisher<[Profile], Never>
-    func toggleFavorite(profile: Profile)
+    func toggleFavorite(profile: Profile) -> AnyPublisher<Bool, Error>
 }
