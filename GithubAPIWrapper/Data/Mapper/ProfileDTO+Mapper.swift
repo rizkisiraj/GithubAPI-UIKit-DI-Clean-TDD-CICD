@@ -12,9 +12,9 @@ extension ProfileDTO {
             username: self.login,
             avatarUrl: self.avatar_url ?? "",
             bio: self.bio ?? "",
-            email: self.email,
-            followers: self.followers,
-            followings: self.following
+            email: self.email ?? "",
+            followers: self.followers ?? 0,
+            followings: self.following ?? 0
         )
     }
 }
