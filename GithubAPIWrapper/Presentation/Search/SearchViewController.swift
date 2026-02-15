@@ -10,12 +10,12 @@ import Combine
 
 final class SearchViewController: UIViewController {
 
+    private let container: DependencyContainer
     private let searchView = SearchView()
-    private let searchProfileUsecase: SearchProfileUsecase
     private var cancellables = Set<AnyCancellable>()
     
-    init(searchProfileUsecase: SearchProfileUsecase) {
-        self.searchProfileUsecase = searchProfileUsecase
+    init(container: DependencyContainer) {
+        self.container = container
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -69,8 +69,8 @@ final class SearchViewController: UIViewController {
         searchView.collectionView.delegate = self
 
         searchView.collectionView.register(
-            UICollectionViewCell.self,
-            forCellWithReuseIdentifier: "Cell"
+            SearchGridCell.self,
+            forCellWithReuseIdentifier: SearchGridCell.reuseIdentifier
         )
     }
 
@@ -104,6 +104,15 @@ final class SearchViewController: UIViewController {
         let more = (start..<(start + 10)).map { "Item \($0)" }
 //        items.append(contentsOf: more)
     }
+    
+    private func goToDetail(item: Profile) {
+        let vc = ProfileDetailViewController(
+            username: item.username,
+            getProfileDetailUsecase: container.getProfileDetailUsecase,
+            getRepoUsecase: container.getReposUsecase)
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
 
 
     private func updateEmptyState() {
@@ -115,7 +124,7 @@ final class SearchViewController: UIViewController {
     
     private func performSearch(keyword: String) {
   
-        searchProfileUsecase.execute(query: keyword, page: 1)
+        container.searchProfileUsecase.execute(query: keyword, page: 1)
                 .receive(on: DispatchQueue.main)
                 .sink { completion in
                     if case let .failure(error) = completion {
@@ -149,17 +158,11 @@ extension SearchViewController: UICollectionViewDataSource {
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: "Cell",
+            withReuseIdentifier: SearchGridCell.reuseIdentifier,
             for: indexPath
-        )
+        ) as! SearchGridCell
 
-        var config = UIListContentConfiguration.cell()
-        config.text = items[indexPath.item].username
-        cell.contentConfiguration = config
-
-        cell.contentView.backgroundColor = .secondarySystemBackground
-        cell.layer.cornerRadius = 10
-        cell.layer.masksToBounds = true
+        cell.configure(with: items[indexPath.item])
 
         return cell
     }
@@ -177,6 +180,12 @@ extension SearchViewController: UICollectionViewDelegate {
             indexPath: indexPath,
             totalItems: items.count
         )
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let profile = items[indexPath.item]
+        print(profile)
+        goToDetail(item: profile)
     }
 }
 
@@ -204,3 +213,20 @@ extension SearchViewController: UISearchBarDelegate {
 //        loadInitialData()
     }
 }
+
+extension SearchViewController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        let spacing: CGFloat = 8
+        let totalSpacing = spacing
+
+        let width = (collectionView.bounds.width - totalSpacing) / 2
+
+        return CGSize(width: width, height: width * 1.2)
+    }
+}
+
+

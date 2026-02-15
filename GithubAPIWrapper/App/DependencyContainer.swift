@@ -33,6 +33,12 @@ final class DependencyContainer {
         )
     }()
     
+    lazy var repoLocalDataSource: RepoLocalDataSource = {
+        RepoLocalDataSourceImpl(
+            context: viewContext
+        )
+    }()
+    
     lazy var userRepository: UserRepository = {
         UserRepositoryImpl(
             apiService: apiService,
@@ -40,7 +46,22 @@ final class DependencyContainer {
         )
     }()
     
+    lazy var repoRepository: RepoRepository = {
+        RepoRepositoryImpl(
+            apiService: apiService,
+            repoLocalDataSource: repoLocalDataSource
+        )
+    }()
+    
     lazy var searchProfileUsecase: SearchProfileUsecase = {
         SearchProfileUsecase(repository: userRepository)
+    }()
+    
+    lazy var getProfileDetailUsecase: GetProfileDetailUsecase = {
+        GetProfileDetailUsecase(repository: userRepository)
+    }()
+    
+    lazy var getReposUsecase: GetRepoUsecase = {
+        GetRepoUsecase(repository: repoRepository)
     }()
 }
