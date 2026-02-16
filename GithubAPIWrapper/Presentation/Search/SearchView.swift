@@ -84,9 +84,9 @@ final class SearchView: UIView {
 
     func notifyIfNearBottom(indexPath: IndexPath, totalItems: Int) {
 
-        guard totalItems > 0 else { return }
+        guard totalItems > 4 else { return }
 
-        let threshold = max(totalItems - 4, 0)
+        let threshold = max(totalItems - 2, 0)
 
         if indexPath.item == threshold {
             onReachedBottom?()

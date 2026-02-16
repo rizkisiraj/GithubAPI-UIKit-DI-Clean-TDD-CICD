@@ -10,6 +10,8 @@ import Combine
 
 final class SearchViewController: UIViewController {
 
+    private var page = 1
+    private var keywordQuery = ""
     private let container: DependencyContainer
     private let searchView = SearchView()
     private var cancellables = Set<AnyCancellable>()
@@ -62,7 +64,6 @@ final class SearchViewController: UIViewController {
         loadInitialData()
     }
 
-    // MARK: - Setup
 
     private func setupCollectionView() {
         searchView.collectionView.dataSource = self
@@ -100,8 +101,27 @@ final class SearchViewController: UIViewController {
     }
 
     private func loadMore() {
-        let start = items.count + 1
-        let more = (start..<(start + 10)).map { "Item \($0)" }
+        
+        if keywordQuery.isEmpty {
+            return
+        }
+        
+        page += 1
+        
+        container.searchProfileUsecase.execute(query: keywordQuery, page: page)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                if case let .failure(error) = completion {
+                    print("Error:", error)
+                }
+            } receiveValue: { [weak self] profiles in
+                guard let self else { return }
+                
+                self.items.append(contentsOf: profiles)
+                self.searchView.collectionView.reloadData()
+                
+            }
+            .store(in: &cancellables)
 //        items.append(contentsOf: more)
     }
     
@@ -126,7 +146,9 @@ final class SearchViewController: UIViewController {
     }
     
     private func performSearch(keyword: String) {
-
+        
+        page = 1
+        
         container.searchProfileUsecase.execute(query: keyword, page: 1)
                 .receive(on: DispatchQueue.main)
                 .sink { completion in
@@ -198,6 +220,7 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 
             let keyword = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            keywordQuery = keyword
 
             searchBar.resignFirstResponder()
 
