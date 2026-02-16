@@ -20,9 +20,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
-        let viewController = SearchViewController(container: container)
-        let nav = UINavigationController(rootViewController: viewController)
-        window.rootViewController = nav
+        
+        let searchVC = SearchViewController(container: container)
+        
+        let searchNav = UINavigationController(rootViewController: searchVC)
+        searchNav.tabBarItem = UITabBarItem(
+            title: "Search",
+            image: UIImage(systemName: "magnifyingglass"),
+            selectedImage: UIImage(systemName: "magnifyingglass")
+        )
+        
+        let favoritesVC = FavoriteViewController(container: container)
+        
+        let favoritesNav = UINavigationController(rootViewController: favoritesVC)
+        favoritesNav.tabBarItem = UITabBarItem(
+            title: "Favorites",
+            image: UIImage(systemName: "star"),
+            selectedImage: UIImage(systemName: "star.fill")
+        )
+        
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [searchNav, favoritesNav]
+        
+        window.rootViewController = tabBarController
         self.window = window
         window.makeKeyAndVisible()
     }

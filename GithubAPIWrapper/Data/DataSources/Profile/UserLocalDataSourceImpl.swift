@@ -32,7 +32,6 @@ final class UserLocalDataSourceImpl: UserLocalDataSource {
     }
     
     func isFavorite(username: String) -> AnyPublisher<Bool, Never> {
-
         Future { promise in
             self.context.perform {
 
@@ -66,6 +65,7 @@ final class UserLocalDataSourceImpl: UserLocalDataSource {
                 entity.email = profile.email
                 entity.followers = Int32(profile.followers)
                 entity.followings = Int32(profile.followings)
+                entity.isFavorite = true
 
                 do {
                     try self.context.save()

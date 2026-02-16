@@ -8,10 +8,10 @@
 import UIKit
 import Combine
 
-final class SearchViewController: UIViewController {
+final class FavoriteViewController: UIViewController {
 
     private let container: DependencyContainer
-    private let searchView = SearchView()
+    private let favoriteView = FavoriteView()
     private var cancellables = Set<AnyCancellable>()
     
     init(container: DependencyContainer) {
@@ -28,7 +28,7 @@ final class SearchViewController: UIViewController {
     private var items: [Profile] = [] {
         didSet {
             updateEmptyState()
-            searchView.collectionView.reloadData()
+            favoriteView.collectionView.reloadData()
         }
     }
 
@@ -46,88 +46,57 @@ final class SearchViewController: UIViewController {
     // MARK: - Lifecycle
 
     override func loadView() {
-        view = searchView
+        view = favoriteView
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Search"
+        title = "Favorites"
 
         setupCollectionView()
         setupEmptyState()
-        setupCallbacks()
-        setupSearch()
+
+        loadInitialData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
 
         loadInitialData()
     }
 
+
     // MARK: - Setup
 
     private func setupCollectionView() {
-        searchView.collectionView.dataSource = self
-        searchView.collectionView.delegate = self
+        favoriteView.collectionView.dataSource = self
+        favoriteView.collectionView.delegate = self
 
-        searchView.collectionView.register(
+        favoriteView.collectionView.register(
             SearchGridCell.self,
             forCellWithReuseIdentifier: SearchGridCell.reuseIdentifier
         )
     }
 
     private func setupEmptyState() {
-        searchView.addSubview(emptyStateLabel)
+        favoriteView.addSubview(emptyStateLabel)
 
         NSLayoutConstraint.activate([
-            emptyStateLabel.centerXAnchor.constraint(equalTo: searchView.centerXAnchor),
-            emptyStateLabel.centerYAnchor.constraint(equalTo: searchView.centerYAnchor)
+            emptyStateLabel.centerXAnchor.constraint(equalTo: favoriteView.centerXAnchor),
+            emptyStateLabel.centerYAnchor.constraint(equalTo: favoriteView.centerYAnchor)
         ])
     }
-
-    private func setupCallbacks() {
-        searchView.onReachedBottom = { [weak self] in
-            self?.loadMore()
-        }
-    }
-
-    private func setupSearch() {
-        searchView.searchBar.delegate = self
-        searchView.searchBar.showsCancelButton = true
-    }
-
-    private func loadInitialData() {
-        // Example
-//        items = (1...20).map { "Item \($0)" }
-    }
-
-    private func loadMore() {
-        let start = items.count + 1
-        let more = (start..<(start + 10)).map { "Item \($0)" }
-//        items.append(contentsOf: more)
-    }
-    
-    private func goToDetail(item: Profile) {
-        let vc = ProfileDetailViewController(
-            username: item.username,
-            getProfileDetailUsecase: container.getProfileDetailUsecase,
-            getRepoUsecase: container.getReposUsecase,
-            isUserFavoriteUsecase: container.isUserFavoriteUsecase,
-            toggleFavoriteUsecase: container.toggleFavoriteUsecase
-        )
-        
-        navigationController?.pushViewController(vc, animated: true)
-    }
-
 
     private func updateEmptyState() {
         let isEmpty = items.isEmpty
 
         emptyStateLabel.isHidden = !isEmpty
-        searchView.collectionView.isHidden = isEmpty
+        favoriteView.collectionView.isHidden = isEmpty
     }
     
-    private func performSearch(keyword: String) {
-
-        container.searchProfileUsecase.execute(query: keyword, page: 1)
+    private func loadInitialData() {
+        container.getFavoriteProfileUsecase.execute()
                 .receive(on: DispatchQueue.main)
                 .sink { completion in
                     if case let .failure(error) = completion {
@@ -137,19 +106,18 @@ final class SearchViewController: UIViewController {
                     guard let self else { return }
                     
                     self.items = profiles
-                    self.searchView.collectionView.reloadData()
+                    self.favoriteView.collectionView.reloadData()
                     
                 }
                 .store(in: &cancellables)
         
-        print("Search:", keyword)
     }
 
 }
 
 // MARK: - UICollectionViewDataSource
 
-extension SearchViewController: UICollectionViewDataSource {
+extension FavoriteViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
@@ -172,50 +140,20 @@ extension SearchViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 
-extension SearchViewController: UICollectionViewDelegate {
+extension FavoriteViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView,
                         willDisplay cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath) {
 
-        searchView.notifyIfNearBottom(
+        favoriteView.notifyIfNearBottom(
             indexPath: indexPath,
             totalItems: items.count
         )
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let profile = items[indexPath.item]
-        print(profile)
-        goToDetail(item: profile)
-    }
 }
 
-// MARK: - UISearchBarDelegate
-
-extension SearchViewController: UISearchBarDelegate {
-
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-
-            let keyword = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-
-            searchBar.resignFirstResponder()
-
-            guard !keyword.isEmpty else {
-                return
-            }
-
-            performSearch(keyword: keyword)
-        }
-
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.text = nil
-        searchBar.resignFirstResponder()
-        items = []
-    }
-}
-
-extension SearchViewController: UICollectionViewDelegateFlowLayout {
+extension FavoriteViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,

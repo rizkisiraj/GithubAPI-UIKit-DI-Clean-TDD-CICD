@@ -64,4 +64,16 @@ final class DependencyContainer {
     lazy var getReposUsecase: GetRepoUsecase = {
         GetRepoUsecase(repository: repoRepository)
     }()
+    
+    lazy var isUserFavoriteUsecase: IsFavoriteUsecase = {
+        IsFavoriteUsecase(repository: userRepository)
+    }()
+    
+    lazy var toggleFavoriteUsecase: ToggleFavoriteUsecase = {
+        ToggleFavoriteUsecase(repository: userRepository)
+    }()
+    
+    lazy var getFavoriteProfileUsecase: GetFavoritePeopleUsecase = {
+        GetFavoritePeopleUsecase(repository: userRepository)
+    }()
 }

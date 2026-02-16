@@ -15,6 +15,9 @@ final class ProfileDetailViewController: UIViewController {
     private let username: String
     private let getProfileDetailUsecase: GetProfileDetailUsecase
     private let getReposUsecase: GetRepoUsecase
+    private let isUserFavoriteUsecase: IsFavoriteUsecase
+    private let toggleFavoriteUsecase: ToggleFavoriteUsecase
+    private var profile: Profile?
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -23,11 +26,15 @@ final class ProfileDetailViewController: UIViewController {
     init(
         username: String,
         getProfileDetailUsecase: GetProfileDetailUsecase,
-        getRepoUsecase: GetRepoUsecase
+        getRepoUsecase: GetRepoUsecase,
+        isUserFavoriteUsecase: IsFavoriteUsecase,
+        toggleFavoriteUsecase: ToggleFavoriteUsecase
     ) {
         self.username = username
         self.getProfileDetailUsecase = getProfileDetailUsecase
         self.getReposUsecase = getRepoUsecase
+        self.isUserFavoriteUsecase = isUserFavoriteUsecase
+        self.toggleFavoriteUsecase = toggleFavoriteUsecase
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -43,7 +50,8 @@ final class ProfileDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        observeFavoriteState()
         fetchProfile()
         fetchRepos()
     }
@@ -59,6 +67,7 @@ final class ProfileDetailViewController: UIViewController {
                     self?.showError(error)
                 }
             } receiveValue: { [weak self] profile in
+                self?.profile = profile
                 self?.renderProfile(profile)
             }
             .store(in: &cancellables)
@@ -77,8 +86,47 @@ final class ProfileDetailViewController: UIViewController {
             }
             .store(in: &cancellables)
     }
+    
+    private func updateFavoriteButton(isFavorite: Bool) {
+        print("lastly")
+        let imageName = isFavorite ? "star.fill" : "star"
 
-    // MARK: - Render
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: imageName),
+            style: .plain,
+            target: self,
+            action: #selector(didTapFavorite)
+        )
+    }
+    
+    private func observeFavoriteState() {
+        isUserFavoriteUsecase.execute(username: username)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isFavorite in
+                self?.updateFavoriteButton(isFavorite: isFavorite)
+            }
+            .store(in: &cancellables)
+    }
+    
+    @objc private func didTapFavorite() {
+        guard let profile else { return }
+
+        toggleFavoriteUsecase
+            .execute(profile: profile)
+            .receive(on: DispatchQueue.main)
+            .sink(
+                receiveCompletion: { completion in
+                    if case let .failure(error) = completion {
+                        print("Toggle favorite failed:", error)
+                    }
+                },
+                receiveValue: { [weak self] isFavorite in
+                    self?.updateFavoriteButton(isFavorite: isFavorite)
+                }
+            )
+            .store(in: &cancellables)
+    }
+
 
     private func renderProfile(_ profile: Profile) {
 
@@ -104,8 +152,6 @@ final class ProfileDetailViewController: UIViewController {
 
         contentView.leftStatLabel.numberOfLines = 2
         contentView.rightStatLabel.numberOfLines = 2
-
-        
     }
 
     private func renderRepos(_ repos: [Repo]) {

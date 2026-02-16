@@ -37,6 +37,10 @@ class UserRepositoryImpl: UserRepository {
         userLocalDataSource.getFavoriteUsers()
     }
     
+    func isUserFavorite(username: String) -> AnyPublisher<Bool, Never> {
+        userLocalDataSource.isFavorite(username: username)
+    }
+    
     func toggleFavorite(profile: Profile) -> AnyPublisher<Bool, Error> {
         userLocalDataSource
             .isFavorite(username: profile.username)
