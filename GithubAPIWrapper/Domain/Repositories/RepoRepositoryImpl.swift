@@ -19,7 +19,7 @@ class RepoRepositoryImpl: RepoRepository {
     
     func getRepos(username: String) -> AnyPublisher<[Repo], any Error> {
         apiService
-            .fetchData(url: "/users/\(username)/repos")
+            .fetchData(url: "/users/\(username)/repos?per_page=3&page=1&sort=created&direction=desc")
             .map { (responseDTO: [RepoDTO]) in
                 return responseDTO.map { $0.toDomain() }
             }

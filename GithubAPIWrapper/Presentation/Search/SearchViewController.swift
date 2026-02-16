@@ -136,7 +136,6 @@ final class SearchViewController: UIViewController {
                     self.items = profiles
                     self.searchView.collectionView.reloadData()
                     
-                    print("dipanggil")
                 }
                 .store(in: &cancellables)
         

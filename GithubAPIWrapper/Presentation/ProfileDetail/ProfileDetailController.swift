@@ -90,11 +90,22 @@ final class ProfileDetailViewController: UIViewController {
 
         contentView.rightStatLabel.text =
         "\(profile.followings)\nFollowing"
+        
+        if let url = URL(string: profile.avatarUrl) {
+            URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
+                guard let data,
+                      let image = UIImage(data: data) else { return }
+
+                DispatchQueue.main.async {
+                    self?.contentView.avatarImageView.image = image
+                }
+            }.resume()
+        }
 
         contentView.leftStatLabel.numberOfLines = 2
         contentView.rightStatLabel.numberOfLines = 2
 
-        // avatar loading is up to you
+        
     }
 
     private func renderRepos(_ repos: [Repo]) {
