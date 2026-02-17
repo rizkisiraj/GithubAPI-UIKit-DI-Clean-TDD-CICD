@@ -40,3 +40,5 @@ final class APIService {
             .eraseToAnyPublisher()
     }
 }
+
+extension APIService: APIServiceProtocol {}

@@ -8,10 +8,10 @@
 import Combine
 
 class UserRepositoryImpl: UserRepository {
-    private let apiService: APIService
+    private let apiService: APIServiceProtocol
     private let userLocalDataSource: UserLocalDataSource
     
-    init(apiService: APIService, userLocalDataSource: UserLocalDataSource) {
+    init(apiService: APIServiceProtocol, userLocalDataSource: UserLocalDataSource) {
         self.apiService = apiService
         self.userLocalDataSource = userLocalDataSource
     }
