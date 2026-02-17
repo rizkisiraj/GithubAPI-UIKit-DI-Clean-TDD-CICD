@@ -21,7 +21,7 @@ pipeline {
                 xcodebuild test \
                   -project GithubAPIWrapper.xcodeproj \
                   -scheme GithubAPIWrapper \
-                  -destination "platform=iOS Simulator,name=iPhone 15,OS=latest"
+                  -destination "platform=iOS Simulator,name=iPhone 17,OS=latest"
                 '''
             }
         }
