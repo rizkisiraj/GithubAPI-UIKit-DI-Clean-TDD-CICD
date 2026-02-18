@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7ED283122F45A0C00002EE0A /* ModuleNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 7ED283112F45A0C00002EE0A /* ModuleNetwork */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		7E6798772F36303A0082C5A9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -57,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7ED283122F45A0C00002EE0A /* ModuleNetwork in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,6 +114,7 @@
 			);
 			name = GithubAPIWrapper;
 			packageProductDependencies = (
+				7ED283112F45A0C00002EE0A /* ModuleNetwork */,
 			);
 			productName = GithubAPIWrapper;
 			productReference = 7E67985D2F3630390082C5A9 /* GithubAPIWrapper.app */;
@@ -165,6 +171,9 @@
 			);
 			mainGroup = 7E6798542F3630390082C5A9;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				7ED2830E2F459FAD0002EE0A /* XCLocalSwiftPackageReference "../ModuleNetwork" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7E67985E2F3630390082C5A9 /* Products */;
 			projectDirPath = "";
@@ -479,6 +488,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		7ED2830E2F459FAD0002EE0A /* XCLocalSwiftPackageReference "../ModuleNetwork" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../ModuleNetwork;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7ED283112F45A0C00002EE0A /* ModuleNetwork */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ModuleNetwork;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7E6798552F3630390082C5A9 /* Project object */;
 }

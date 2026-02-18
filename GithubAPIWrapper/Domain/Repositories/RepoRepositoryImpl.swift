@@ -6,6 +6,7 @@
 //
 
 import Combine
+import ModuleNetwork
 
 class RepoRepositoryImpl: RepoRepository {
     

@@ -30,8 +30,8 @@
             filePath = "GithubAPIWrapper/Domain/Repositories/UserRepositoryImpl.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
             landmarkName = "getFavoriteUsers()"
             landmarkType = "7">
          </BreakpointContent>

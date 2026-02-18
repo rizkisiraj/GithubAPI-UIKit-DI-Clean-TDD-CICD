@@ -6,6 +6,7 @@
 //
 
 import Combine
+import ModuleNetwork
 
 class UserRepositoryImpl: UserRepository {
     private let apiService: APIServiceProtocol
