@@ -7,6 +7,7 @@
 
 import XCTest
 import Combine
+import ModuleNetwork
 @testable import GithubAPIWrapper
 
 final class UserRepositoryImplTests: XCTestCase {

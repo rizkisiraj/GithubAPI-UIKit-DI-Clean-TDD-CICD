@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7EAD90AA2F45A6A100EA924A /* ModuleNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 7EAD90A92F45A6A100EA924A /* ModuleNetwork */; };
+		7EAD91152F45AC3400EA924A /* ModuleNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 7EAD91142F45AC3400EA924A /* ModuleNetwork */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7EAD91152F45AC3400EA924A /* ModuleNetwork in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +83,7 @@
 				7E67985F2F3630390082C5A9 /* GithubAPIWrapper */,
 				7E6798792F36303A0082C5A9 /* GithubAPIWrapperTests */,
 				7E6798832F36303A0082C5A9 /* GithubAPIWrapperUITests */,
+				7EAD91132F45AC3400EA924A /* Frameworks */,
 				7E67985E2F3630390082C5A9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -92,6 +95,13 @@
 				7E6798762F36303A0082C5A9 /* GithubAPIWrapperTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		7EAD91132F45AC3400EA924A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,6 +148,7 @@
 			);
 			name = GithubAPIWrapperTests;
 			packageProductDependencies = (
+				7EAD91142F45AC3400EA924A /* ModuleNetwork */,
 			);
 			productName = GithubAPIWrapperTests;
 			productReference = 7E6798762F36303A0082C5A9 /* GithubAPIWrapperTests.xctest */;
@@ -502,6 +513,11 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		7EAD90A92F45A6A100EA924A /* ModuleNetwork */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7EAD90A82F45A6A100EA924A /* XCRemoteSwiftPackageReference "ModuleNetwork" */;
+			productName = ModuleNetwork;
+		};
+		7EAD91142F45AC3400EA924A /* ModuleNetwork */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7EAD90A82F45A6A100EA924A /* XCRemoteSwiftPackageReference "ModuleNetwork" */;
 			productName = ModuleNetwork;
