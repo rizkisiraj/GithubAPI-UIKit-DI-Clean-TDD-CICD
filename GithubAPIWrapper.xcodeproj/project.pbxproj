@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7ED283122F45A0C00002EE0A /* ModuleNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 7ED283112F45A0C00002EE0A /* ModuleNetwork */; };
+		7EAD90AA2F45A6A100EA924A /* ModuleNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 7EAD90A92F45A6A100EA924A /* ModuleNetwork */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,7 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7ED283122F45A0C00002EE0A /* ModuleNetwork in Frameworks */,
+				7EAD90AA2F45A6A100EA924A /* ModuleNetwork in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,7 +114,7 @@
 			);
 			name = GithubAPIWrapper;
 			packageProductDependencies = (
-				7ED283112F45A0C00002EE0A /* ModuleNetwork */,
+				7EAD90A92F45A6A100EA924A /* ModuleNetwork */,
 			);
 			productName = GithubAPIWrapper;
 			productReference = 7E67985D2F3630390082C5A9 /* GithubAPIWrapper.app */;
@@ -172,7 +172,7 @@
 			mainGroup = 7E6798542F3630390082C5A9;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				7ED2830E2F459FAD0002EE0A /* XCLocalSwiftPackageReference "../ModuleNetwork" */,
+				7EAD90A82F45A6A100EA924A /* XCRemoteSwiftPackageReference "ModuleNetwork" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7E67985E2F3630390082C5A9 /* Products */;
@@ -489,16 +489,21 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		7ED2830E2F459FAD0002EE0A /* XCLocalSwiftPackageReference "../ModuleNetwork" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../ModuleNetwork;
+/* Begin XCRemoteSwiftPackageReference section */
+		7EAD90A82F45A6A100EA924A /* XCRemoteSwiftPackageReference "ModuleNetwork" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rizkisiraj/ModuleNetwork";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
 		};
-/* End XCLocalSwiftPackageReference section */
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7ED283112F45A0C00002EE0A /* ModuleNetwork */ = {
+		7EAD90A92F45A6A100EA924A /* ModuleNetwork */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 7EAD90A82F45A6A100EA924A /* XCRemoteSwiftPackageReference "ModuleNetwork" */;
 			productName = ModuleNetwork;
 		};
 /* End XCSwiftPackageProductDependency section */

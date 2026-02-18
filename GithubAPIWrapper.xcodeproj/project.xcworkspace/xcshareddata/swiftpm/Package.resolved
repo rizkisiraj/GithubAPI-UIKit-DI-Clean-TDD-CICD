@@ -1,0 +1,15 @@
+{
+  "originHash" : "315b8ce3e40b0f2fab598a7ab45faed98de6ab8dd251106e8d5e0c2817f23e8f",
+  "pins" : [
+    {
+      "identity" : "modulenetwork",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rizkisiraj/ModuleNetwork",
+      "state" : {
+        "branch" : "main",
+        "revision" : "0d9b77d8de8787ceb29c8b8f905d694b6fbecf43"
+      }
+    }
+  ],
+  "version" : 3
+}
