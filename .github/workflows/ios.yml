@@ -29,6 +29,6 @@ jobs:
           xcodebuild test \
             -project GithubAPIWrapper.xcodeproj \
             -scheme GithubAPIWrapper \
-            -destination "platform=iOS Simulator" \
+            -destination "platform=iOS Simulator,name=iPhone 16,OS=18.2" \
             -derivedDataPath build
 
