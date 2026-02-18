@@ -26,6 +26,6 @@ jobs:
           xcodebuild test \
             -project GithubAPIWrapper.xcodeproj \
             -scheme GithubAPIWrapper \
-            -destination "platform=iOS Simulator" \
+            -destination "id=dvtdevice-DVTiOSDeviceSimulatorPlaceholder-iphonesimulator:placeholder" \
             -derivedDataPath build
 
