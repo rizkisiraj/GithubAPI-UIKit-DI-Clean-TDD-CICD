@@ -18,6 +18,7 @@ final class ProfileDetailViewController: UIViewController {
     private let isUserFavoriteUsecase: IsFavoriteUsecase
     private let toggleFavoriteUsecase: ToggleFavoriteUsecase
     private var profile: Profile?
+    private var imageTask: URLSessionDataTask?
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -142,6 +143,15 @@ final class ProfileDetailViewController: UIViewController {
 
         contentView.rightStatLabel.text =
         "\(profile.followings)\nFollowing"
+        
+        imageTask = ImageLoader.shared.loadImage(
+                    from: profile.avatarUrl
+        ) { [weak self] image in
+            guard let self else { return }
+            
+            self.contentView.avatarImageView.image = image
+        }
+        
         
         if let url = URL(string: profile.avatarUrl) {
             URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in

@@ -75,7 +75,7 @@ final class SearchGridCell: UICollectionViewCell {
             return
         }
         
-        let cacheKey = url.absoluteString as NSString
+        
         imageTask = ImageLoader.shared.loadImage(
                     from: profile.avatarUrl
         ) { [weak self] image in
