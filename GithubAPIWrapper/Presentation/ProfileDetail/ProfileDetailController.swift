@@ -55,6 +55,10 @@ final class ProfileDetailViewController: UIViewController {
         fetchProfile()
         fetchRepos()
     }
+    
+    deinit {
+        print("💀 ProfileDetailController deallocated")
+    }
 
     // MARK: - API
 

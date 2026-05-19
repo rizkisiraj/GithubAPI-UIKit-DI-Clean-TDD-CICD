@@ -15,6 +15,7 @@ final class SearchViewController: UIViewController {
     private let container: DependencyContainer
     private let searchView = SearchView()
     private var cancellables = Set<AnyCancellable>()
+    private var searchCancellable: AnyCancellable?
     
     init(container: DependencyContainer) {
         self.container = container
@@ -105,10 +106,10 @@ final class SearchViewController: UIViewController {
         if keywordQuery.isEmpty {
             return
         }
-        
+        print("📦 cancellables count: \(cancellables.count)")
         page += 1
         
-        container.searchProfileUsecase.execute(query: keywordQuery, page: page)
+        searchCancellable = container.searchProfileUsecase.execute(query: keywordQuery, page: page)
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 if case let .failure(error) = completion {
@@ -119,10 +120,7 @@ final class SearchViewController: UIViewController {
                 
                 self.items.append(contentsOf: profiles)
                 self.searchView.collectionView.reloadData()
-                
             }
-            .store(in: &cancellables)
-//        items.append(contentsOf: more)
     }
     
     private func goToDetail(item: Profile) {
@@ -146,23 +144,21 @@ final class SearchViewController: UIViewController {
     }
     
     private func performSearch(keyword: String) {
-        
+        print("📦 cancellables count: \(cancellables.count)")
         page = 1
         
-        container.searchProfileUsecase.execute(query: keyword, page: 1)
-                .receive(on: DispatchQueue.main)
-                .sink { completion in
-                    if case let .failure(error) = completion {
-                        print("Error:", error)
-                    }
-                } receiveValue: { [weak self] profiles in
-                    guard let self else { return }
-                    
-                    self.items = profiles
-                    self.searchView.collectionView.reloadData()
-                    
+        searchCancellable = container.searchProfileUsecase.execute(query: keyword, page: 1)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                if case let .failure(error) = completion {
+                    print("Error:", error)
                 }
-                .store(in: &cancellables)
+            } receiveValue: { [weak self] profiles in
+                guard let self else { return }
+                
+                self.items = profiles
+                self.searchView.collectionView.reloadData()
+            }
         
         print("Search:", keyword)
     }

@@ -13,10 +13,20 @@ final class SearchGridCell: UICollectionViewCell {
 
     private let imageView = UIImageView()
     private let titleLabel = UILabel()
+    private var imageTask: URLSessionDataTask?
+    private var currentImageURL: String?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageTask?.cancel()
+        imageTask = nil
+        currentImageURL = nil
+        imageView.image = nil
     }
 
     required init?(coder: NSCoder) {
@@ -56,16 +66,26 @@ final class SearchGridCell: UICollectionViewCell {
     func configure(with profile: Profile) {
         titleLabel.text = profile.username
         imageView.image = nil
+        
+        currentImageURL = profile.avatarUrl
 
-        if let url = URL(string: profile.avatarUrl) {
-            URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
-                guard let data,
-                      let image = UIImage(data: data) else { return }
-
-                DispatchQueue.main.async {
-                    self?.imageView.image = image
-                }
-            }.resume()
+        imageTask?.cancel()
+        
+        guard let url = URL(string: profile.avatarUrl) else {
+            return
+        }
+        
+        let cacheKey = url.absoluteString as NSString
+        imageTask = ImageLoader.shared.loadImage(
+                    from: profile.avatarUrl
+        ) { [weak self] image in
+            guard let self else { return }
+            
+            guard self.currentImageURL == profile.avatarUrl else {
+                return
+            }
+            
+            self.imageView.image = image
         }
     }
 }
